@@ -275,7 +275,7 @@ export default async function AboutPage() {
   const bioLines = OWNER_BIO.split("\n");
 
   return (
-    <div className="relative z-10 max-w-3xl mx-auto px-6 pt-36 pb-20">
+    <div className="relative z-10 max-w-3xl mx-auto px-6 pt-32 pb-20">
 
       {/* Page title */}
       <h1

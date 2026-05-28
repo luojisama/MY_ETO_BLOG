@@ -9,7 +9,7 @@ export default function PostsPage() {
   const tags = getAllTags();
 
   return (
-    <div className="relative z-10 max-w-5xl mx-auto px-6 pt-36 pb-20">
+    <div className="relative z-10 max-w-5xl mx-auto px-6 pt-32 pb-20">
       <h1
         className="text-center animate-fade-in-up"
         style={{

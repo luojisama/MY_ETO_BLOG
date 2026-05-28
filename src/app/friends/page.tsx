@@ -10,7 +10,7 @@ export default function FriendsPage() {
   const hasFriends = friendLinks.length > 0;
 
   return (
-    <div className="relative z-10 max-w-5xl mx-auto px-6 pt-36 pb-20">
+    <div className="relative z-10 max-w-5xl mx-auto px-6 pt-32 pb-20">
       {/* Title */}
       <h1
         className="text-center animate-fade-in-up"

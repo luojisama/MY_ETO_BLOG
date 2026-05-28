@@ -28,7 +28,7 @@ export default async function PostPage({ params }: Props) {
   if (!post) notFound();
 
   return (
-    <div className="relative z-10 max-w-[72ch] mx-auto px-6 pt-36 pb-20">
+    <div className="relative z-10 max-w-[72ch] mx-auto px-6 pt-32 pb-20">
       <Link
         href="/posts"
         className="inline-block transition-colors duration-300 hover:text-[var(--color-text)]"
