@@ -18,6 +18,8 @@ export interface PostMeta {
   description: string;
   tags?: string[];
   readingTime?: number; // minutes
+  /** Cover image — relative to /public or full URL. Shown on /posts list + post header. */
+  cover?: string;
 }
 
 export interface Post extends PostMeta {
@@ -29,12 +31,6 @@ export interface Post extends PostMeta {
 export function estimateReadingTime(content: string): number {
   const chars = content.replace(/\s+/g, "").length;
   return Math.max(1, Math.round(chars / 350));
-}
-
-function normalizeDate(value: unknown): string {
-  if (!value) return "";
-  if (value instanceof Date) return value.toISOString().slice(0, 10);
-  return String(value);
 }
 
 // ─── GitHub Card ────────────────────────────────────────────────────────────
@@ -258,6 +254,27 @@ async function processMarkdown(content: string): Promise<string> {
 
 // ─── Public API ──────────────────────────────────────────────────────────────
 
+/** Normalize frontmatter date to "YYYY-MM-DD" string (gray-matter may parse bare dates as Date objects) */
+function normalizeDate(raw: unknown): string {
+  if (!raw) return "";
+  if (raw instanceof Date) {
+    // ISO date in local-ish format; use UTC parts to avoid timezone drift
+    const y = raw.getUTCFullYear();
+    const m = String(raw.getUTCMonth() + 1).padStart(2, "0");
+    const d = String(raw.getUTCDate()).padStart(2, "0");
+    return `${y}-${m}-${d}`;
+  }
+  return String(raw);
+}
+
+/** Pick cover URL — accepts either `cover` or fuwari-style `image` frontmatter key, ignores empty strings. */
+function pickCover(data: Record<string, unknown>): string | undefined {
+  const raw = data.cover ?? data.image;
+  if (typeof raw !== "string") return undefined;
+  const trimmed = raw.trim();
+  return trimmed.length > 0 ? trimmed : undefined;
+}
+
 export function getAllPosts(): PostMeta[] {
   if (!fs.existsSync(postsDirectory)) return [];
   return fs
@@ -275,6 +292,7 @@ export function getAllPosts(): PostMeta[] {
         description: data.description || "",
         tags: data.tags || [],
         readingTime: estimateReadingTime(content),
+        cover: pickCover(data),
       };
     })
     .sort((a, b) => (a.date > b.date ? -1 : 1));
@@ -291,6 +309,7 @@ export async function getPostBySlug(slug: string): Promise<Post | null> {
     description: data.description || "",
     tags: data.tags || [],
     readingTime: estimateReadingTime(content),
+    cover: pickCover(data),
     contentHtml: await processMarkdown(content),
     rawContent: content,
   };
@@ -326,6 +345,7 @@ export function searchPosts(query: string): PostMeta[] {
               description: data.description || "",
               tags: data.tags || [],
               readingTime: estimateReadingTime(content),
+              cover: pickCover(data),
             },
           ]
         : [];

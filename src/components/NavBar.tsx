@@ -53,7 +53,7 @@ export default function NavBar() {
         className="fixed top-0 left-0 right-0 z-50 backdrop-blur-sm"
         style={{ backgroundColor: "rgba(10,10,10,0.88)" }}
       >
-        <div className="max-w-7xl mx-auto px-6 h-16 flex items-center justify-between">
+        <div className="max-w-7xl mx-auto px-6 h-24 flex items-center justify-between">
           {/* Logo */}
           <Link
             href="/"
@@ -64,8 +64,8 @@ export default function NavBar() {
             <span
               style={{
                 fontFamily: "var(--font-heading), sans-serif",
-                fontSize: "15px",
-                letterSpacing: "0.35em",
+                fontSize: "28px",
+                letterSpacing: "0.25em",
                 textTransform: "uppercase" as const,
               }}
             >
@@ -73,8 +73,8 @@ export default function NavBar() {
             </span>
           </Link>
 
-          {/* Desktop links */}
-          <div className="hidden md:flex items-center gap-7">
+          {/* Desktop links — breakpoint pushed to xl due to 36px font size */}
+          <div className="hidden xl:flex items-center gap-6">
             {links.map((link) => (
               <Link
                 key={link.href}
@@ -82,8 +82,8 @@ export default function NavBar() {
                 className="transition-colors duration-300 hover:text-white"
                 style={{
                   fontFamily: "var(--font-heading), sans-serif",
-                  fontSize: "13px",
-                  letterSpacing: "0.2em",
+                  fontSize: "36px",
+                  letterSpacing: "0.1em",
                   textTransform: "uppercase" as const,
                   color: pathname === link.href ? "var(--color-text)" : "var(--color-text-faint)",
                 }}
@@ -106,8 +106,8 @@ export default function NavBar() {
             </button>
           </div>
 
-          {/* Mobile: search + hamburger */}
-          <div className="md:hidden flex items-center gap-3">
+          {/* Mobile / tablet: search + hamburger */}
+          <div className="xl:hidden flex items-center gap-3">
             <button onClick={() => setSearchOpen(true)} style={{ color: "var(--color-text-faint)" }} aria-label="搜索">
               <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.5">
                 <circle cx="11" cy="11" r="8"/><path d="M21 21l-4.35-4.35"/>
@@ -125,9 +125,9 @@ export default function NavBar() {
           </div>
         </div>
 
-        {/* Mobile dropdown */}
+        {/* Mobile / tablet dropdown */}
         {menuOpen && (
-          <div className="md:hidden border-t" style={{ borderColor: "var(--color-frame-idle)", backgroundColor: "rgba(10,10,10,0.97)" }}>
+          <div className="xl:hidden border-t" style={{ borderColor: "var(--color-frame-idle)", backgroundColor: "rgba(10,10,10,0.97)" }}>
             <div className="flex flex-col py-3">
               {links.map((link) => (
                 <Link

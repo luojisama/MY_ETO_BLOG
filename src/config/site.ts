@@ -12,7 +12,7 @@
 /** 站点标题 — 浏览器标签页 / Footer / 友链页 self 卡片 */
 export const SITE_TITLE = "白咲のblog";
 
-/** 站点描述 — <meta description> / 友链页 self 卡片 */
+/** 站点描述 — <meta description> / 首页副标题 / 友链页 self 卡片 */
 export const SITE_DESCRIPTION = "歇斯底里是崩溃，底里歇斯是美味";
 
 /** 完整域名（含协议，结尾不带 /） — 友链页 self 卡片 / 邮件中的链接 */
@@ -23,6 +23,23 @@ export const SITE_START = "2025-05-27";
 
 /** 导航栏左上角 logo 文字 */
 export const NAV_BRAND = "白咲";
+
+// ── 首页 Hero 标语 ────────────────────────────────────────────────────────────
+
+/** 首页中央的标语全文 */
+export const SLOGAN = "歇斯底里是崩溃，底里歇斯是美味";
+
+/**
+ * 红字候选池 — 标语中可被染红的字符集合。
+ * 每次刷新页面，会从标语中找出所有「在候选池里出现过」的字符位置，
+ * 然后随机抽 SLOGAN_RED_COUNT 个位置染红。
+ *
+ * 例：候选池 = "歇斯底里美味"，标语里的「歇/斯/底/里/美/味」字位都可能被染红。
+ */
+export const SLOGAN_RED_POOL = "歇斯底里美味";
+
+/** 每次随机染红几个字 */
+export const SLOGAN_RED_COUNT = 3;
 
 // ── 博主信息 ──────────────────────────────────────────────────────────────────
 
@@ -56,6 +73,35 @@ export const GITHUB_USERNAME = "luojisama";
 export const OWNER_GITHUB = `https://github.com/${GITHUB_USERNAME}`;
 export const OWNER_TWITTER = "https://x.com/shizuku__191981";
 export const OWNER_EMAIL = "mailto:your@email.com";
+
+/** 平台链接图标类型 — 对应 PlatformIcon 组件可渲染的图标 */
+export type OwnerLinkIcon =
+  | "github"
+  | "twitter"
+  | "email"
+  | "rss"
+  | "steam"
+  | "qq"
+  | "bilibili";
+
+export interface OwnerLink {
+  label: string;
+  href: string;
+  icon: OwnerLinkIcon;
+}
+
+/**
+ * About 页 / Footer 显示的平台链接列表（来自 fuwari 配置，已去掉「行程」）。
+ */
+export const OWNER_LINKS: OwnerLink[] = [
+  { label: "GitHub", href: OWNER_GITHUB, icon: "github" },
+  { label: "Twitter / X", href: OWNER_TWITTER, icon: "twitter" },
+  { label: "Steam", href: "https://steamcommunity.com/id/shirosakishizuku/", icon: "steam" },
+  { label: "QQ", href: "https://qm.qq.com/q/BdkE3VO22s", icon: "qq" },
+  { label: "BiliBili", href: "https://space.bilibili.com/187685621", icon: "bilibili" },
+  { label: "Email", href: OWNER_EMAIL, icon: "email" },
+  { label: "RSS", href: "/rss.xml", icon: "rss" },
+];
 
 // ── GitHub 动态（About 页）────────────────────────────────────────────────────
 // 只填上面 GITHUB_USERNAME 即可显示最近 6 个仓库。

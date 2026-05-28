@@ -1,7 +1,9 @@
 import CTAButton from "@/components/CTAButton";
 import FeatureCard from "@/components/FeatureCard";
 import ScrollHint from "@/components/ScrollHint";
+import Slogan from "@/components/Slogan";
 import { getAllPosts } from "@/lib/posts";
+import { SITE_DESCRIPTION } from "@/config/site";
 
 function IconCrosshair() {
   return (
@@ -85,32 +87,18 @@ export default function Home() {
       <section className="relative flex flex-col items-center min-h-screen px-6 pt-24">
         {/* Hero — vertically centered in upper portion */}
         <div className="flex flex-col items-center text-center max-w-5xl mt-auto mb-auto" style={{ paddingBottom: "240px" }}>
-          <h1 className="animate-fade-in-up">
-            <span
-              className="block leading-[0.95] tracking-[0.04em] uppercase"
-              style={{
-                fontFamily: "var(--font-display), var(--font-heading), sans-serif",
-                fontSize: "clamp(3rem, 10vw, 9rem)",
-              }}
-            >
-              <span className="text-[var(--color-text)]">Thoughts From</span>
-              <br />
-              <span className="text-[var(--color-text)]">Beyond </span>
-              <span className="text-[var(--color-accent-bright)]">Orbit</span>
-            </span>
-          </h1>
+          <Slogan />
 
           <p
             className="mt-8 animate-fade-in-up delay-200"
             style={{
               color: "var(--color-text-faint)",
               fontFamily: "var(--font-heading), sans-serif",
-              fontSize: "clamp(11px, 1.2vw, 14px)",
-              letterSpacing: "0.35em",
-              textTransform: "uppercase" as const,
+              fontSize: "clamp(12px, 1.2vw, 15px)",
+              letterSpacing: "0.3em",
             }}
           >
-            探索思想与技术的边界
+            {SITE_DESCRIPTION}
           </p>
 
           <div className="mt-12 animate-fade-in-up delay-400">

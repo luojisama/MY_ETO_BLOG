@@ -13,7 +13,7 @@ export default async function ThoughtsPage() {
   const thoughts = await getAllThoughts();
 
   return (
-    <div className="relative z-10 max-w-2xl mx-auto px-6 pt-28 pb-20">
+    <div className="relative z-10 max-w-2xl mx-auto px-6 pt-36 pb-20">
       {/* Header */}
       <h1
         className="text-center animate-fade-in-up"

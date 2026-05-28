@@ -9,7 +9,7 @@ export default function PostsPage() {
   const tags = getAllTags();
 
   return (
-    <div className="relative z-10 max-w-5xl mx-auto px-6 pt-28 pb-20">
+    <div className="relative z-10 max-w-5xl mx-auto px-6 pt-36 pb-20">
       <h1
         className="text-center animate-fade-in-up"
         style={{
@@ -39,60 +39,82 @@ export default function PostsPage() {
                   className="group relative block animate-fade-in-up"
                   style={{ animationDelay: `${i * 0.06}s` }}
                 >
-                  <div className="relative px-6 py-5 transition-all duration-300">
+                  <div className={`relative transition-all duration-300 ${post.cover ? "flex flex-col sm:flex-row gap-0 sm:gap-5" : "px-6 py-5"}`}>
                     {/* Corner brackets */}
-                    <span className="absolute top-0 left-0 w-5 h-5 border-t border-l border-[var(--color-frame-idle)] group-hover:border-[var(--color-frame-active)] transition-colors duration-300" />
-                    <span className="absolute top-0 right-0 w-5 h-5 border-t border-r border-[var(--color-frame-idle)] group-hover:border-[var(--color-frame-active)] transition-colors duration-300" />
-                    <span className="absolute bottom-0 left-0 w-5 h-5 border-b border-l border-[var(--color-frame-idle)] group-hover:border-[var(--color-frame-active)] transition-colors duration-300" />
-                    <span className="absolute bottom-0 right-0 w-5 h-5 border-b border-r border-[var(--color-frame-idle)] group-hover:border-[var(--color-frame-active)] transition-colors duration-300" />
+                    <span className="absolute top-0 left-0 w-5 h-5 border-t border-l border-[var(--color-frame-idle)] group-hover:border-[var(--color-frame-active)] transition-colors duration-300 z-10" />
+                    <span className="absolute top-0 right-0 w-5 h-5 border-t border-r border-[var(--color-frame-idle)] group-hover:border-[var(--color-frame-active)] transition-colors duration-300 z-10" />
+                    <span className="absolute bottom-0 left-0 w-5 h-5 border-b border-l border-[var(--color-frame-idle)] group-hover:border-[var(--color-frame-active)] transition-colors duration-300 z-10" />
+                    <span className="absolute bottom-0 right-0 w-5 h-5 border-b border-r border-[var(--color-frame-idle)] group-hover:border-[var(--color-frame-active)] transition-colors duration-300 z-10" />
 
-                    <div className="flex items-baseline justify-between gap-4">
-                      <h2
-                        className="text-[var(--color-text-dim)] group-hover:text-[var(--color-text)] transition-colors duration-300"
-                        style={{ fontFamily: "var(--font-heading), sans-serif", fontSize: "16px", letterSpacing: "0.04em" }}
-                      >
-                        {post.title}
-                      </h2>
-                      <div className="flex items-center gap-3 shrink-0">
-                        {post.readingTime && (
-                          <span style={{ fontSize: "11px", color: "var(--color-text-faint)" }}>
-                            {post.readingTime} min
-                          </span>
-                        )}
-                        <time style={{ color: "var(--color-text-faint)", fontSize: "12px", letterSpacing: "0.05em" }}>
-                          {post.date}
-                        </time>
+                    {/* Cover image (optional) */}
+                    {post.cover && (
+                      <div className="shrink-0 overflow-hidden relative w-full sm:w-[240px] aspect-[16/9] sm:aspect-[4/3] border-b sm:border-b-0 sm:border-r border-[var(--color-frame-idle)]">
+                        {/* eslint-disable-next-line @next/next/no-img-element */}
+                        <img
+                          src={post.cover}
+                          alt={post.title}
+                          loading="lazy"
+                          style={{
+                            width: "100%",
+                            height: "100%",
+                            objectFit: "cover",
+                            transition: "transform 0.6s",
+                          }}
+                          className="group-hover:scale-[1.03]"
+                        />
                       </div>
+                    )}
+
+                    {/* Text body */}
+                    <div className={post.cover ? "flex-1 px-6 py-5 min-w-0" : ""}>
+                      <div className="flex items-baseline justify-between gap-4 flex-wrap">
+                        <h2
+                          className="text-[var(--color-text-dim)] group-hover:text-[var(--color-text)] transition-colors duration-300"
+                          style={{ fontFamily: "var(--font-heading), sans-serif", fontSize: "17px", letterSpacing: "0.04em" }}
+                        >
+                          {post.title}
+                        </h2>
+                        <div className="flex items-center gap-3 shrink-0">
+                          {post.readingTime && (
+                            <span style={{ fontSize: "12px", color: "var(--color-text-faint)" }}>
+                              {post.readingTime} min
+                            </span>
+                          )}
+                          <time style={{ color: "var(--color-text-faint)", fontSize: "12px", letterSpacing: "0.05em" }}>
+                            {post.date}
+                          </time>
+                        </div>
+                      </div>
+
+                      {post.description && (
+                        <p className="mt-2 group-hover:text-[var(--color-text-dim)] transition-colors duration-300"
+                          style={{ color: "var(--color-text-faint)", fontSize: "14px", lineHeight: "1.7" }}
+                        >
+                          {post.description}
+                        </p>
+                      )}
+
+                      {post.tags && post.tags.length > 0 && (
+                        <div className="mt-3 flex gap-2 flex-wrap">
+                          {post.tags.map((tag) => (
+                            <span
+                              key={tag}
+                              className="border"
+                              style={{
+                                color: "var(--color-text-faint)",
+                                borderColor: "var(--color-frame-idle)",
+                                fontSize: "10px",
+                                letterSpacing: "0.1em",
+                                textTransform: "uppercase" as const,
+                                padding: "2px 8px",
+                              }}
+                            >
+                              {tag}
+                            </span>
+                          ))}
+                        </div>
+                      )}
                     </div>
-
-                    {post.description && (
-                      <p className="mt-2 group-hover:text-[var(--color-text-dim)] transition-colors duration-300"
-                        style={{ color: "var(--color-text-faint)", fontSize: "13px", lineHeight: "1.6" }}
-                      >
-                        {post.description}
-                      </p>
-                    )}
-
-                    {post.tags && post.tags.length > 0 && (
-                      <div className="mt-3 flex gap-2 flex-wrap">
-                        {post.tags.map((tag) => (
-                          <span
-                            key={tag}
-                            className="border"
-                            style={{
-                              color: "var(--color-text-faint)",
-                              borderColor: "var(--color-frame-idle)",
-                              fontSize: "10px",
-                              letterSpacing: "0.1em",
-                              textTransform: "uppercase" as const,
-                              padding: "2px 8px",
-                            }}
-                          >
-                            {tag}
-                          </span>
-                        ))}
-                      </div>
-                    )}
                   </div>
                 </Link>
               ))}

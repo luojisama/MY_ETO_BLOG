@@ -28,7 +28,7 @@ export default async function PostPage({ params }: Props) {
   if (!post) notFound();
 
   return (
-    <div className="relative z-10 max-w-[72ch] mx-auto px-6 pt-28 pb-20">
+    <div className="relative z-10 max-w-[72ch] mx-auto px-6 pt-36 pb-20">
       <Link
         href="/posts"
         className="inline-block transition-colors duration-300 hover:text-[var(--color-text)]"
@@ -43,7 +43,25 @@ export default async function PostPage({ params }: Props) {
         &larr; 返回文章
       </Link>
 
-      <header className="mt-10 mb-14">
+      {/* Cover banner (optional) */}
+      {post.cover && (
+        <div
+          className="mt-8 overflow-hidden animate-fade-in"
+          style={{
+            border: "1px solid var(--color-frame-idle)",
+            aspectRatio: "16 / 7",
+          }}
+        >
+          {/* eslint-disable-next-line @next/next/no-img-element */}
+          <img
+            src={post.cover}
+            alt={post.title}
+            style={{ width: "100%", height: "100%", objectFit: "cover", display: "block" }}
+          />
+        </div>
+      )}
+
+      <header className={post.cover ? "mt-10 mb-14" : "mt-10 mb-14"}>
         <h1
           className="animate-fade-in-up"
           style={{

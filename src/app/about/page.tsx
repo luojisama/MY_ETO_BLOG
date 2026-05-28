@@ -7,11 +7,10 @@ import {
   OWNER_NAME,
   OWNER_BIO,
   OWNER_AVATAR,
-  OWNER_GITHUB,
-  OWNER_TWITTER,
-  OWNER_EMAIL,
+  OWNER_LINKS,
   TECH_STACK,
 } from "@/config/site";
+import PlatformIcon from "@/components/PlatformIcon";
 
 export const metadata: Metadata = { title: "关于" };
 
@@ -206,7 +205,7 @@ function RepoCard({ repo }: { repo: GitHubRepo }) {
           className="group-hover:text-white transition-colors duration-300"
           style={{
             fontFamily: "var(--font-mono), monospace",
-            fontSize: "13px",
+            fontSize: "15px",
             color: "var(--color-text)",
             fontWeight: 600,
             letterSpacing: "0.01em",
@@ -220,7 +219,7 @@ function RepoCard({ repo }: { repo: GitHubRepo }) {
         <span
           style={{
             fontFamily: "var(--font-mono), monospace",
-            fontSize: "11px",
+            fontSize: "13px",
             color: "var(--color-text-faint)",
             flexShrink: 0,
             letterSpacing: "0.03em",
@@ -233,9 +232,9 @@ function RepoCard({ repo }: { repo: GitHubRepo }) {
       {repo.description && (
         <p
           style={{
-            fontSize: "12px",
+            fontSize: "13px",
             color: "var(--color-text-faint)",
-            lineHeight: "1.6",
+            lineHeight: "1.7",
             marginBottom: "10px",
             display: "-webkit-box",
             WebkitLineClamp: 2,
@@ -249,12 +248,12 @@ function RepoCard({ repo }: { repo: GitHubRepo }) {
 
       <div className="flex items-center justify-between">
         {langColor && repo.language ? (
-          <span className="flex items-center gap-1.5" style={{ fontSize: "11px", color: "var(--color-text-faint)", fontFamily: "var(--font-mono), monospace" }}>
+          <span className="flex items-center gap-1.5" style={{ fontSize: "12px", color: "var(--color-text-faint)", fontFamily: "var(--font-mono), monospace" }}>
             <span style={{ width: "8px", height: "8px", borderRadius: "50%", backgroundColor: langColor, display: "inline-block", flexShrink: 0 }} />
             {repo.language}
           </span>
         ) : <span />}
-        <span style={{ fontSize: "10px", color: "var(--color-text-faint)", fontFamily: "var(--font-mono), monospace", letterSpacing: "0.04em" }}>
+        <span style={{ fontSize: "11px", color: "var(--color-text-faint)", fontFamily: "var(--font-mono), monospace", letterSpacing: "0.04em" }}>
           {timeAgo(repo.pushed_at)}
         </span>
       </div>
@@ -262,24 +261,7 @@ function RepoCard({ repo }: { repo: GitHubRepo }) {
   );
 }
 
-const platforms = (github: string, twitter: string, email: string) => [
-  {
-    label: "GitHub", href: github,
-    icon: <svg width="16" height="16" viewBox="0 0 24 24" fill="currentColor"><path d="M12 0C5.37 0 0 5.37 0 12c0 5.31 3.435 9.795 8.205 11.385.6.105.825-.255.825-.57 0-.285-.015-1.23-.015-2.235-3.015.555-3.795-.735-4.035-1.41-.135-.345-.72-1.41-1.23-1.695-.42-.225-1.02-.78-.015-.795.945-.015 1.62.87 1.845 1.23 1.08 1.815 2.805 1.305 3.495.99.105-.78.42-1.305.765-1.605-2.67-.3-5.46-1.335-5.46-5.925 0-1.305.465-2.385 1.23-3.225-.12-.3-.54-1.53.12-3.18 0 0 1.005-.315 3.3 1.23.96-.27 1.98-.405 3-.405s2.04.135 3 .405c2.295-1.56 3.3-1.23 3.3-1.23.66 1.65.24 2.88.12 3.18.765.84 1.23 1.905 1.23 3.225 0 4.605-2.805 5.625-5.475 5.925.435.375.81 1.095.81 2.22 0 1.605-.015 2.895-.015 3.3 0 .315.225.69.825.57A12.02 12.02 0 0 0 24 12c0-6.63-5.37-12-12-12z"/></svg>,
-  },
-  {
-    label: "Twitter / X", href: twitter,
-    icon: <svg width="16" height="16" viewBox="0 0 24 24" fill="currentColor"><path d="M18.244 2.25h3.308l-7.227 8.26 8.502 11.24H16.17l-5.214-6.817L4.99 21.75H1.68l7.73-8.835L1.254 2.25H8.08l4.713 6.231zm-1.161 17.52h1.833L7.084 4.126H5.117z"/></svg>,
-  },
-  {
-    label: "Email", href: email,
-    icon: <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.8"><rect x="2" y="4" width="20" height="16" rx="2"/><path d="M2 8l10 6 10-6"/></svg>,
-  },
-  {
-    label: "RSS", href: "/rss.xml",
-    icon: <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.8"><path d="M4 11a9 9 0 0 1 9 9"/><path d="M4 4a16 16 0 0 1 16 16"/><circle cx="5" cy="19" r="1" fill="currentColor" stroke="none"/></svg>,
-  },
-];
+// Platform link list now comes from OWNER_LINKS in src/config/site.ts
 
 // ─── Page ──────────────────────────────────────────────────────────────────────
 
@@ -290,11 +272,10 @@ export default async function AboutPage() {
   ]);
 
   const { repos, yearCommits } = github;
-  const links = platforms(OWNER_GITHUB, OWNER_TWITTER, OWNER_EMAIL);
   const bioLines = OWNER_BIO.split("\n");
 
   return (
-    <div className="relative z-10 max-w-3xl mx-auto px-6 pt-28 pb-20">
+    <div className="relative z-10 max-w-3xl mx-auto px-6 pt-36 pb-20">
 
       {/* Page title */}
       <h1
@@ -328,10 +309,10 @@ export default async function AboutPage() {
             </div>
           </div>
           <div>
-            <h2 style={{ fontFamily: "var(--font-heading), sans-serif", fontSize: "18px", letterSpacing: "0.08em", color: "var(--color-text)", marginBottom: "8px" }}>
+            <h2 style={{ fontFamily: "var(--font-heading), sans-serif", fontSize: "22px", letterSpacing: "0.06em", color: "var(--color-text)", marginBottom: "10px" }}>
               {OWNER_NAME}
             </h2>
-            <p style={{ color: "var(--color-text-dim)", fontSize: "15px", lineHeight: "1.8" }}>
+            <p style={{ color: "var(--color-text)", fontSize: "17px", lineHeight: "1.9" }}>
               {bioLines.map((line, i) => (
                 <span key={i}>{line}{i < bioLines.length - 1 && <br />}</span>
               ))}
@@ -343,21 +324,23 @@ export default async function AboutPage() {
 
         {/* ── Platform links ── */}
         <section>
-          <h2 className="mb-5" style={{ fontFamily: "var(--font-heading), sans-serif", fontSize: "11px", letterSpacing: "0.3em", textTransform: "uppercase" as const, color: "var(--color-text-dim)" }}>
+          <h2 className="mb-5" style={{ fontFamily: "var(--font-heading), sans-serif", fontSize: "13px", letterSpacing: "0.3em", textTransform: "uppercase" as const, color: "var(--color-text-dim)", fontWeight: 500 }}>
             联系方式
           </h2>
-          <div className="grid grid-cols-2 gap-3">
-            {links.map((p) => (
+          <div className="grid grid-cols-2 sm:grid-cols-3 gap-3">
+            {OWNER_LINKS.map((p) => (
               <a
                 key={p.label}
                 href={p.href}
                 target={p.href.startsWith("http") ? "_blank" : undefined}
                 rel="noopener noreferrer"
-                className="group flex items-center gap-3 p-3 transition-all duration-300"
+                className="group flex items-center gap-3 px-4 py-3 transition-all duration-300"
                 style={{ border: "1px solid var(--color-frame-idle)", color: "var(--color-text-faint)" }}
               >
-                <span className="group-hover:text-[var(--color-accent-bright)] transition-colors duration-300">{p.icon}</span>
-                <span className="group-hover:text-white transition-colors duration-300" style={{ fontFamily: "var(--font-heading), sans-serif", fontSize: "13px", letterSpacing: "0.08em" }}>
+                <span className="group-hover:text-[var(--color-accent-bright)] transition-colors duration-300">
+                  <PlatformIcon icon={p.icon} size={18} />
+                </span>
+                <span className="group-hover:text-white transition-colors duration-300" style={{ fontFamily: "var(--font-heading), sans-serif", fontSize: "15px", letterSpacing: "0.05em" }}>
                   {p.label}
                 </span>
                 <svg width="10" height="10" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" className="ml-auto opacity-0 group-hover:opacity-100 transition-opacity duration-300">
@@ -372,15 +355,15 @@ export default async function AboutPage() {
 
         {/* ── GitHub Activity ── */}
         <section>
-          <div className="flex items-center justify-between mb-5">
-            <h2 style={{ fontFamily: "var(--font-heading), sans-serif", fontSize: "11px", letterSpacing: "0.3em", textTransform: "uppercase" as const, color: "var(--color-text-dim)" }}>
+          <div className="flex items-center justify-between mb-5 gap-3 flex-wrap">
+            <h2 style={{ fontFamily: "var(--font-heading), sans-serif", fontSize: "13px", letterSpacing: "0.3em", textTransform: "uppercase" as const, color: "var(--color-text-dim)", fontWeight: 500 }}>
               GitHub
             </h2>
             {yearCommits !== null && (
               <span
                 style={{
                   fontFamily: "var(--font-mono), monospace",
-                  fontSize: "11px",
+                  fontSize: "13px",
                   color: "var(--color-text-faint)",
                   letterSpacing: "0.05em",
                 }}
@@ -391,7 +374,7 @@ export default async function AboutPage() {
           </div>
 
           {repos.length === 0 ? (
-            <p style={{ fontSize: "13px", color: "var(--color-text-faint)" }}>
+            <p style={{ fontSize: "14px", color: "var(--color-text-faint)" }}>
               暂无仓库数据
             </p>
           ) : (
@@ -417,10 +400,10 @@ export default async function AboutPage() {
 
         {/* ── Tech stack ── */}
         <section>
-          <h2 className="mb-5" style={{ fontFamily: "var(--font-heading), sans-serif", fontSize: "11px", letterSpacing: "0.3em", textTransform: "uppercase" as const, color: "var(--color-text-dim)" }}>
+          <h2 className="mb-5" style={{ fontFamily: "var(--font-heading), sans-serif", fontSize: "13px", letterSpacing: "0.3em", textTransform: "uppercase" as const, color: "var(--color-text-dim)", fontWeight: 500 }}>
             技术栈
           </h2>
-          <ul className="space-y-3" style={{ color: "var(--color-text-faint)", fontSize: "14px" }}>
+          <ul className="space-y-3" style={{ color: "var(--color-text-dim)", fontSize: "16px" }}>
             {TECH_STACK.map((item) => (
               <li key={item} className="flex items-center gap-3">
                 <span style={{ width: "4px", height: "4px", borderRadius: "50%", backgroundColor: "var(--color-accent)", display: "inline-block", flexShrink: 0 }} />
